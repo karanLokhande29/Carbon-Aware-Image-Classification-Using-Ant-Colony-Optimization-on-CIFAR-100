@@ -1,23 +1,63 @@
-# Carbon-Aware Image Classification with ACO (CIFAR-100)
 
-This project implements a "Green AI" approach to image classification using the CIFAR-100 dataset. It utilizes **Ant Colony Optimization (ACO)** to automate hyperparameter tuning and model selection, specifically optimizing for a balance between **Test Accuracy** and **Carbon Emissions (CO₂)**.
+
+CARBON-AWARE IMAGE CLASSIFICATION WITH ACO (CIFAR-100)
+
+This project implements a "Green AI" approach to image classification using the CIFAR-100 dataset. It utilizes Ant Colony Optimization (ACO) to automate hyperparameter tuning and model selection, specifically optimizing for a balance between Test Accuracy and Carbon Emissions (CO2).
 
 The system evaluates both Deep Learning (ResNet-18) and Classical Machine Learning models (SVM, XGBoost, etc.) using a two-stage ACO process.
 
-## Key Features
+KEY FEATURES
 
-* **Carbon Tracking:** Integrated with **CodeCarbon** to measure real-time CO₂ emissions (kg) for every training run.
-* **Hybrid Modeling:**
-    * **Deep Learning:** Fine-tuned ResNet-18 (with Automatic Mixed Precision).
-    * **Classical ML:** SVM, Random Forest, XGBoost, kNN, and Logistic Regression trained on PCA-reduced ResNet-18 embeddings.
-* **Ant Colony Optimization (ACO):**
-    * **Intra-Algorithm ACO:** Swarm-based search for the best hyperparameters *within* each algorithm type.
-    * **Inter-Algorithm ACO:** High-level selection to identify the best overall model across all types.
-* **Dataset:** CIFAR-100 (20k "fast train" split for efficiency).
+* Carbon Tracking: Integrated with CodeCarbon to measure real-time CO2 emissions (kg) for every training run.
+* Hybrid Modeling:
+* Deep Learning: Fine-tuned ResNet-18 (with Automatic Mixed Precision).
+* Classical ML: SVM, Random Forest, XGBoost, kNN, and Logistic Regression trained on PCA-reduced ResNet-18 embeddings.
 
-## Methodology
 
-1.  **Feature Extraction:** Images are passed through a pre-trained **ResNet-18** (ImageNet weights) to generate embeddings, which are reduced to 100 dimensions using **PCA**.
-2.  **Search Space:** The ACO algorithm explores a defined grid of hyperparameters (e.g., Learning Rate, Batch Size for ResNet; C, Gamma for SVM; n_estimators for Random Forest).
-3.  **Optimization Function:** The "pheromone" deposit in ACO is calculated based on a weighted combination of **Validation Accuracy** and **CO₂ Emissions**.
-4.  **Selection:** The system outputs a "Champion" model that offers the best trade-off.
+* Ant Colony Optimization (ACO):
+* Intra-Algorithm ACO: Swarm-based search for the best hyperparameters within each algorithm type.
+* Inter-Algorithm ACO: High-level selection to identify the best overall model across all types.
+
+
+* Dataset: CIFAR-100 (20k "fast train" split for efficiency).
+
+METHODOLOGY
+
+1. Feature Extraction: Images are passed through a pre-trained ResNet-18 (ImageNet weights) to generate embeddings, which are reduced to 100 dimensions using PCA.
+2. Search Space: The ACO algorithm explores a defined grid of hyperparameters (e.g., Learning Rate, Batch Size for ResNet; C, Gamma for SVM; n_estimators for Random Forest).
+3. Optimization Function: The "pheromone" deposit in ACO is calculated based on a weighted combination of Validation Accuracy and CO2 Emissions.
+4. Selection: The system outputs a "Champion" model that offers the best trade-off.
+
+INSTALLATION
+
+1. Clone the repository:
+git clone [https://github.com/your-username/carbon-aware-aco.git](https://www.google.com/search?q=https://github.com/your-username/carbon-aware-aco.git)
+cd carbon-aware-aco
+2. Install dependencies:
+pip install -r requirements.txt
+
+USAGE
+
+This project is designed to run in a Jupyter Notebook environment (like Kaggle or Colab) with GPU support.
+
+1. Open the notebook:
+jupyter notebook "I025_I039_I040_IS2 (1).ipynb"
+2. Execute the cells in order. The main() function at the end will trigger the full pipeline:
+* Download CIFAR-100 data.
+* Extract embeddings.
+* Run Intra-ACO for all models.
+* Run Inter-ACO to pick the winner.
+* Save logs to runs_v2/.
+
+
+
+RESULTS STRUCTURE
+
+The simulation generates a table comparing the best configuration found for each algorithm. Example columns include:
+
+* Algorithm (e.g., ResNet18, SVM_RBF)
+* Validation Accuracy
+* Test Accuracy
+* CO2 (kg)
+* Hyperparameters
+
